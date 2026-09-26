@@ -19,3 +19,14 @@ qa_pairs = [
 #Loops through each value
 questions = [q for q, a in qa_pairs]
 answers = [a for q, a in qa_pairs]
+
+#Building vocab
+all_words = set()
+for 1 in questions:
+    for word in q.split():
+        all_words.add(word)
+                      
+vocab = sorted(all_words)
+#Numbers each word
+word_to_id = {word: i for i, word  in enumerate(vocab)}
+vocab_size = len(vocab)
