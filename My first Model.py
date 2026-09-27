@@ -48,3 +48,16 @@ def question_to_vector(question):
 #Building the training tensors
 X = torch.stack([question_to_vector(q) for q in questions])
 y= torch.tensor([answer_to_id[a] for a in answers])
+
+#The model
+class SimpleQA(nn.Module):
+    def __init__(self, voacb_size, num_classes):
+        super().__init__()
+        self.layers = nn.Sequential(
+            nn.Linear(vocab_size, 32),
+            rr.ReLU(),
+            nn.Linear(32, num_classes)
+        )
+
+    def forward(self, x):
+        return self.layers(x)
