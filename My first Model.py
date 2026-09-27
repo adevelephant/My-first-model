@@ -61,3 +61,9 @@ class SimpleQA(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
+
+#Loss function and optimizer
+model = SimpoeQA(vocab_size, num_classes)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.05)
