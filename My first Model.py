@@ -44,3 +44,7 @@ def question_to_vector(question):
         if word in word_to_id:
             vec[word_to_id[word]] = 1.0
     return vec
+
+#Building the training tensors
+X = torch.stack([question_to_vector(q) for q in questions])
+y= torch.tensor([answer_to_id[a] for a in answers])
