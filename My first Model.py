@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import requests
 
 #Training data
 qa_pairs = [
@@ -17,8 +18,22 @@ qa_pairs = [
 ]
 
 #Loops through each value
+response = requests.get("https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json")
+data = response.json()
+
+
+qa_pairs = []
+for country in data:
+    name = country["name"]["common"].lower()
+    if "capital" in country and country["capital"]:
+        capital = country["capital"][0]
+        question = f"what is the capital of {name}"
+        qa_pairs.append((question, capital))
+
 questions = [q for q, a in qa_pairs]
 answers = [a for q, a in qa_pairs]
+
+print(f"Loaded {len(qa_pairs)} country_capital pairs")
 
 #Building vocab
 all_words = set()
