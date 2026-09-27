@@ -1,5 +1,5 @@
 import torch
-import torch,nn as nn
+import torch.nn as nn
 import torch.optim as optim
 
 #Training data
@@ -55,7 +55,7 @@ class SimpleQA(nn.Module):
         super().__init__()
         self.layers = nn.Sequential(
             nn.Linear(vocab_size, 32),
-            rr.ReLU(),
+            nn.ReLU(),
             nn.Linear(32, num_classes)
         )
 
@@ -78,4 +78,22 @@ for epoch in range(epochs):
     optimizer.step()
 
     if(epoch + 1) % 50 == 0:
-        print(f"Epoch {epoch + 1/{epochs}} | Loss: {loss.tiem():.4f}")
+        print(f"Epoch {epoch}/{epochs} | Loss: {loss.item():.4f}")
+
+#Asking the model the questions
+def ask(question):
+    model.eval()
+    with torch.no_grad():
+        vec = question_to_vector(question.lower()).unsqueeze(0)
+        outputes = model(vec)
+        predicted_id = outputes.argmax(dim=1).item()
+        return id_to_answer[predicted_id]
+
+if __name__ == "__main__":
+    print("Ask me about a country's capital! (type 'quit' to stop)")
+    while True:
+        user_question = input("Your question: ")
+        if user_question.lower() == "quit":
+            break
+        answer = ask(user_question)
+        print("Answer:", answer)
