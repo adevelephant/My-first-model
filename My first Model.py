@@ -63,7 +63,19 @@ class SimpleQA(nn.Module):
         return self.layers(x)
 
 #Loss function and optimizer
-model = SimpoeQA(vocab_size, num_classes)
+model = SimpleQA(vocab_size, num_classes)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.05)
+
+#Training loop
+epochs = 200
+for epoch in range(epochs):
+    optimizer.zero_grad()
+    outputes = model(X)
+    loss = criterion(outputes, y)
+    loss.backward()
+    optimizer.step()
+
+    if(epoch + 1) % 50 == 0:
+        print(f"Epoch {epoch + 1/{epochs}} | Loss: {loss.tiem():.4f}")
