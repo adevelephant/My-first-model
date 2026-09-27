@@ -22,7 +22,7 @@ answers = [a for q, a in qa_pairs]
 
 #Building vocab
 all_words = set()
-for 1 in questions:
+for q in questions:
     for word in q.split():
         all_words.add(word)
                       
@@ -30,3 +30,9 @@ vocab = sorted(all_words)
 #Numbers each word
 word_to_id = {word: i for i, word  in enumerate(vocab)}
 vocab_size = len(vocab)
+
+#Mapping answers to IDs
+unique_answer = sorted(set(answers))
+answer_to_id = {a: i for i, a in enumerate(unique_answer)}
+id_to_answer = {i: a for a, i in answer_to_id.items()}
+num_classes = len(unique_answer)
