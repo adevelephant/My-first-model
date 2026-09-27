@@ -36,3 +36,11 @@ unique_answer = sorted(set(answers))
 answer_to_id = {a: i for i, a in enumerate(unique_answer)}
 id_to_answer = {i: a for a, i in answer_to_id.items()}
 num_classes = len(unique_answer)
+
+#Converting a question into numbers
+def question_to_vector(question):
+    vec = torch.zeros(vocab_size)
+    for word in question.split():
+        if word in word_to_id:
+            vec[word_to_id[word]] = 1.0
+    return vec
